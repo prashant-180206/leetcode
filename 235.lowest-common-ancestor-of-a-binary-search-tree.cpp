@@ -29,21 +29,14 @@ public:
     TreeNode *lowestCommonAncestor(TreeNode *root, TreeNode *p, TreeNode *q)
     {
         if (root == nullptr)
-            return nullptr;
-
-        // check if p or q is lca itself
-        if (root->val == p->val || root->val == q->val)
             return root;
 
-        TreeNode *llca = lowestCommonAncestor(root->left, p, q);
-        TreeNode *rlca = lowestCommonAncestor(root->right, p, q);
-
-        if (llca && rlca)
-            return root;
-        else if (llca != nullptr)
-            return llca;
+        if (root->val > p->val && root->val > q->val)
+            return lowestCommonAncestor(root->left, p, q);
+        else if (root->val < p->val && root->val < q->val)
+            return lowestCommonAncestor(root->right, p, q);
         else
-            return rlca;
+            return root;
     }
 };
 // @lc code=end
