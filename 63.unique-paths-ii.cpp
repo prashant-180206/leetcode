@@ -3,13 +3,15 @@
  *
  * [63] Unique Paths II
  */
+#include <vector>
+using namespace std;
 
 // @lc code=start
-class Solution {
+class Solution
+{
 public:
-    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
-        
+    int uniquePathsWithObstacles(vector<vector<int>> &obstacleGrid)
+    {
     }
 };
 // @lc code=end
-
