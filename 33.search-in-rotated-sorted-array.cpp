@@ -22,7 +22,6 @@ public:
             if (A[mid] == target)
                 return mid;
             
-            // Left Sorted
             if (A[start] <= A[mid])
             {
                 if (A[start] <= target && A[mid] > target)
@@ -32,7 +31,6 @@ public:
             }
             else
             {
-                // Right Sorted
                 if (A[mid] < target && A[end] >= target)
                     start = mid + 1;
                 else

@@ -8,9 +8,26 @@
 #include <algorithm>
 using namespace std;
 
+bool helper(string s, vector<string> &wordDict, int index)
+{
+    for (string &word : wordDict)
+    {
+        int len = word.size();
+        if (index + len <= s.size() && s.substr(index, len) == word)
+        {
+            if (index + len == s.size())
+                return true;
+            if (helper(s, wordDict, index + len))
+                return true;
+        }
+    }
+    return false;
+}
+
 // @lc code=start
 class Solution
 {
+
 public:
     bool wordBreak(string s, vector<string> &wordDict)
     {
@@ -30,7 +47,7 @@ public:
 
                 int len = word.size();
 
-                if (i + len <= n && s.compare(i, len, word) == 0)
+                if (i + len <= n && s.substr(i, len) == word)
                     dp[i + len] = true;
             }
         }

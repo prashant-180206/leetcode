@@ -20,13 +20,19 @@ public:
 
         long long ans = 0;
 
-        for (int i = 31; i >= 0; i--)
+        while (dvd >= dvs)
         {
-            if ((dvs << i) <= dvd)
+            long long temp = dvs;
+            long long multiple = 1;
+
+            while ((temp << 1) <= dvd)
             {
-                dvd -= (dvs << i);
-                ans += (1LL << i);
+                temp <<= 1;
+                multiple <<= 1;
             }
+
+            dvd -= temp;
+            ans += multiple;
         }
 
         if ((dividend < 0) ^ (divisor < 0))
