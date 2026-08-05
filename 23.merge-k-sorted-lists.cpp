@@ -1,6 +1,7 @@
 #include <vector>
 #include <algorithm>
 #include <iostream>
+#include <queue>
 using namespace std;
 /*
  * @lc app=leetcode id=23 lang=cpp
@@ -30,56 +31,54 @@ struct ListNode
 
 class Solution
 {
-public:
-    bool areListsEmpty(vector<ListNode *> &lists)
+    struct Compare
     {
-        // cout<<"areListsEmpty called"<<endl;
-        bool ans = true;
-        for (int i = 0; i < lists.size(); i++)
+        bool operator()(ListNode *a, ListNode *b)
         {
-            if (lists[i] != nullptr)
-            {
-                ans = false;
-                break;
-            }
+            return a->val > b->val; // Min heap
         }
-        return ans;
-    }
+    };
 
+    priority_queue<ListNode *, vector<ListNode *>, Compare> pq;
+
+    bool initialized = false;
+
+public:
     ListNode *getNextNode(vector<ListNode *> &lists)
     {
-        // cout<<"getNextNode called"<<endl;
-        ListNode *ans = nullptr;
-        int pos = -1;
-        int minnum = INT_MAX;
-        for (int i = 0; i < lists.size(); i++)
+        if (!initialized)
         {
-            if (lists[i] == nullptr)
-                continue;
-            if (minnum > lists[i]->val)
-            {
-                pos = i;
-                minnum = lists[i]->val;
-            }
+            for (ListNode *head : lists)
+                if (head)
+                    pq.push(head);
+
+            initialized = true;
         }
-        ans = lists[pos];
 
-        lists[pos] = lists[pos]->next;
+        if (pq.empty())
+            return nullptr;
 
-        return ans;
+        ListNode *node = pq.top();
+        pq.pop();
+
+        if (node->next)
+            pq.push(node->next);
+
+        return node;
     }
 
     ListNode *mergeKLists(vector<ListNode *> &lists)
     {
-        vector<ListNode *> listCopy = lists;
         ListNode dummyhead(0);
         ListNode *tail = &dummyhead;
 
-        while (!areListsEmpty(listCopy))
+        while (true)
         {
-            // ListNode * current = ans;
-            ListNode *nextNode = getNextNode(listCopy);
-           
+            ListNode *nextNode = getNextNode(lists);
+
+            if (nextNode == nullptr)
+                break;
+
             tail->next = nextNode;
             tail = tail->next;
         }
@@ -87,4 +86,5 @@ public:
         return dummyhead.next;
     }
 };
+
 // @lc code=end
