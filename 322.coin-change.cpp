@@ -4,6 +4,7 @@
  * [322] Coin Change
  */
 #include <vector>
+#include <climits>
 using namespace std;
 
 int solve(vector<int> &arr, int targ)
